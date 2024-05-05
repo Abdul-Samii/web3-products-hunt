@@ -1,7 +1,13 @@
+import { ArrowTrendingUpIcon, ArrowUturnRightIcon, BellAlertIcon, BuildingOffice2Icon, ClipboardDocumentListIcon, ComputerDesktopIcon, GlobeAltIcon, PuzzlePieceIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 import { useState, useRef, useEffect } from 'react';
 
 const Navbar = () => {
 	const [showSidebar, setShowSidebar] = useState(false);
+	const [searchValue, setSearchValue] = useState('');
+
+	const handleSearchChange = (event: any) => {
+    setSearchValue(event.target.value);
+  };
 	const sidebarRef = useRef<any>(null);
 
 	const toggleSidebar = () => {
@@ -22,43 +28,51 @@ const Navbar = () => {
 	}, []);
 
 	return (
-		<nav className='w-full bg-white shadow-sm flex flex-wrap items-center md:justify-between px-4 py-2 md:py-4'>
-			<div className='flex items-center'>
+		<nav className='w-full text-white bg-primarydark shadow-sm flex items-center md:justify-between px-4 py-2 md:py-4 md:px-8'>
+			<div className={`flex items-center ${searchValue.length > 0 && 'md:hidden'}`}>
 				<p className='text-lg font-semibold mr-6'>LOGO</p>
 				<div className='hidden md:flex space-x-4'>
-					<p>Explore</p>
-					<p>Leaderboard</p>
-					<p>Synergy</p>
-					<p>API</p>
+					<p className='hover:text-red-500 cursor-pointer'>Trending</p>
+					<p className='hover:text-red-500 cursor-pointer'>Gaming</p>
+					<p className='hover:text-red-500 cursor-pointer'>Infrastructure</p>
+					<p className='hover:text-red-500 cursor-pointer'>Recently Added</p>
 				</div>
 			</div>
 
-			<div className='md:flex md:items-center md:justify-end space-x-2'>
+			<div className={`md:flex md:items-center md:justify-end space-x-2 ${searchValue.length > 0 ? 'md:w-full' : 'w-1/2'}`}>
 				<input
 					placeholder='Search here'
-					className='border-[1px] p-2 md:w-96 w-56 rounded-md bg-gray-100 outline-none'
+					value={searchValue}
+					onChange={handleSearchChange}
+					className={`border-[1px] p-1 md:p-2 md:w-full w-56 text-black rounded-md bg-gray-100 outline-none ${searchValue.length > 0 && 'md:rounded-full md:p-3'}`}
 				/>
+				<select className={`hidden md:inline-block border-[1px] py-2 px-1 text-black outline-none rounded-md ${searchValue.length == 0 && 'md:hidden'}`}>
+					<option>Popularity</option>
+					<option>Most Recent</option>
+					<option>Old</option>
+					<option>Stable</option>
+				</select>
+				<p className='bg-secondarylight p-2 rounded-md hidden md:inline'>
+					<BellAlertIcon className='h-6 text-black'/>
+				</p>
 				<div className='md:flex space-x-2 hidden'>
-					<p className='bg-black p-2 text-white rounded-md w-24 text-center'>About Us</p>
-					<p className='bg-black p-2 text-white rounded-md w-24 text-center'>Signup</p>
+					<p className='w-24 text-center m-auto'>About Us</p>
+					<p className='bg-secondarylight text-black p-2 rounded-md w-24 text-center'>Signup</p>
 				</div>
 			</div>
 
 				{/* Menu icon */}
-			<div className='md:hidden cursor-pointer ml-4' onClick={toggleSidebar}>
-				<svg className="h-6 w-6 text-black" viewBox="0 0 32 32">
-					<path d="M16 31C7.729 31 1 24.271 1 16S7.729 1 16 1s15 6.729 15 15-6.729 15-15 15zm0-28C8.832 3 3 8.832 3 16s5.832 13 13 13 13-5.832 13-13S23.168 3 16 3z"/>
-					<circle cx="16" cy="11.368" r="3.368"/>
-					<path d="M20.673 24h-9.346c-.83 0-1.502-.672-1.502-1.502v-.987a5.404 5.404 0 0 1 5.403-5.403h1.544a5.404 5.404 0 0 1 5.403 5.403v.987c0 .83-.672 1.502-1.502 1.502z"/>
-				</svg>
-			</div>
-			<div className='md:hidden cursor-pointer ml-4' onClick={toggleSidebar}>
+			<div className='md:hidden flex space-x-2 ml-auto cursor-pointer'>
+				<UserCircleIcon className='h-6' />
+			{/* </div>
+			<div className='md:hidden cursor-pointer ml-4' onClick={toggleSidebar}> */}
 				<svg
-					className='h-6 w-6 text-black'
+					className='h-6 w-6 text-secondarylight'
 					xmlns='http://www.w3.org/2000/svg'
 					fill='none'
 					viewBox='0 0 24 24'
 					stroke='currentColor'
+					onClick={toggleSidebar}
 				>
 					<path
 						strokeLinecap='round'
@@ -71,13 +85,15 @@ const Navbar = () => {
 
 			{/* Sidebar */}
 			{showSidebar && (
-				<div ref={sidebarRef} className='md:hidden absolute inset-y-0 left-0 z-50 bg-black text-white w-64'>
-					<p className='px-4 py-4 hover:bg-gray-800'>Explore</p>
-					<p className='px-4 py-4 hover:bg-gray-800'>Leaderboard</p>
-					<p className='px-4 py-4 hover:bg-gray-800'>Synergy</p>
-					<p className='px-4 py-4 hover:bg-gray-800'>API</p>
-					<p className='px-4 py-4 hover:bg-gray-800'>About Us</p>
-					<p className='px-4 py-4 hover:bg-gray-800'>Signup</p>
+				<div ref={sidebarRef} className='md:hidden absolute inset-y-0 left-0 z-50 bg-secondarydark text-white w-64'>
+					<p className='px-4 py-4 hover:bg-primarydark w-full flex'><p className='my-auto mx-2'><ArrowTrendingUpIcon className='h-4' /></p>Trending</p>
+					<p className='px-4 py-4 hover:bg-primarydark w-full flex'><p className='my-auto mx-2'><PuzzlePieceIcon className='h-4' /></p>Gaming</p>
+					<p className='px-4 py-4 hover:bg-primarydark w-full flex'><p className='my-auto mx-2'><BuildingOffice2Icon className='h-4' /></p>Infrastructure</p>
+					<p className='px-4 py-4 hover:bg-primarydark w-full flex'><p className='my-auto mx-2'><ComputerDesktopIcon className='h-4' /></p>Hardware</p>
+					<p className='px-4 py-4 hover:bg-primarydark w-full flex'><p className='my-auto mx-2'><ClipboardDocumentListIcon className='h-4' /></p>Recently Added</p>
+					<p className='px-4 py-4 hover:bg-primarydark w-full flex'><p className='my-auto mx-2'><GlobeAltIcon className='h-4' /></p>About Us</p>
+					<p className='px-4 py-4 hover:bg-primarydark w-full flex'><p className='my-auto mx-2'><BellAlertIcon className='h-4' /></p>Notifications</p>
+					<p className='px-4 py-4 hover:bg-primarydark w-full flex'><p className='my-auto mx-2'><ArrowUturnRightIcon className='h-4' /></p>Signup</p>
 				</div>
 			)}
 		</nav>
