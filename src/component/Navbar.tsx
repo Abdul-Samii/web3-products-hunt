@@ -1,13 +1,13 @@
 import { ArrowTrendingUpIcon, ArrowUturnRightIcon, BellAlertIcon, BuildingOffice2Icon, ClipboardDocumentListIcon, ComputerDesktopIcon, GlobeAltIcon, PuzzlePieceIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 import { useState, useRef, useEffect } from 'react';
 
-const Navbar = () => {
+const Navbar = ({searchValue, handleSearchChange}: any) => {
 	const [showSidebar, setShowSidebar] = useState(false);
-	const [searchValue, setSearchValue] = useState('');
+	// const [searchValue, setSearchValue] = useState('');
 
-	const handleSearchChange = (event: any) => {
-    setSearchValue(event.target.value);
-  };
+	// const handleSearchChange = (event: any) => {
+  //   setSearchValue(event.target.value);
+  // };
 	const sidebarRef = useRef<any>(null);
 
 	const toggleSidebar = () => {
@@ -53,7 +53,7 @@ const Navbar = () => {
 					<option>Stable</option>
 				</select>
 				<p className='bg-secondarylight p-2 rounded-md hidden md:inline'>
-					<BellAlertIcon className='h-6 text-black'/>
+					<BellAlertIcon className='h-6 text-black bell-animation'/>
 				</p>
 				<div className='md:flex space-x-2 hidden'>
 					<p className='w-24 text-center m-auto'>About Us</p>
