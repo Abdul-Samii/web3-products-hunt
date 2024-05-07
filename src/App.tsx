@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Banner, Navbar } from "./component";
-import SearchResults from "./component/SearchResults";
+import SearchResults from "./component/search/SearchResults";
 
 const App = () => {
   const [searchValue, setSearchValue] = useState('');
