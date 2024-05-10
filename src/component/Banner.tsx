@@ -6,8 +6,8 @@ import sherbankIcon from '../assets/images/sherbank-icon.png';
 
 const Banner = () => {
   return (
-    <div className='h-[40vh] md:h-[60vh] bg-secondarylight relative'>
-      <div className="absolute inset-0 flex flex-col justify-center items-center px-4">
+    <div className='h-[40vh] honeycomb-container md:h-[60vh] bg-secondarylight relative'>
+      <div className="absolute md:honeycomb inset-0 flex flex-col justify-center items-center px-4">
         <div className='flex bg-white shadow-sm py-1 px-4 rounded-md mb-4'>
           <p className="text-xs md:text-sm">Join our Discord Community!</p>
           <ArrowUpRightIcon className='h-4 ml-2 mt-1' />
