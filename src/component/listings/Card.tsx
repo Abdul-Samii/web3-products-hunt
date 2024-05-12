@@ -4,7 +4,7 @@ import logo2 from '../../assets/images/ethglobal-1.5f2444a8.svg';
 import { LuDot } from 'react-icons/lu';
 
 const Card = ({ className, project }: any) => {
-  console.log("jjj ", project)
+
   return (
     <div className={`bg-white r border relative border-gray-200 h-36 md:w-48 w-full mx-4 p-2 rounded-md shadow-sm ${className}`}>
       <div className="flex items-center space-x-4">

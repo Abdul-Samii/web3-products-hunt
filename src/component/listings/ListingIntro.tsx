@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { BoltIcon, QuestionMarkCircleIcon, StarIcon } from "@heroicons/react/24/outline";
+import { Link } from 'react-router-dom';
 
 const ListingIntro = ({ title }: any) => {
   const [selectedTab, setSelectedTab] = useState('latest');
@@ -31,7 +32,7 @@ const ListingIntro = ({ title }: any) => {
             <p className='hidden md:inline'>Popular</p>
           </div>
         </div>
-        <button className='hidden md:inline py-2 px-4 border-[1px] rounded-md font-semibold'>Explore all</button>
+        <Link to='/explore' className='hidden md:inline py-2 px-4 border-[1px] rounded-md font-semibold'>Explore all</Link>
       </div>
     </div>
   );

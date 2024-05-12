@@ -21,7 +21,6 @@ const HorizontalFilters: React.FC = () => {
       if (containerRef.current) {
         const container = containerRef.current;
         setShowLeftIcon(container.scrollLeft > 0);
-        console.log(container.scrollLeft < (container.scrollWidth - container.clientWidth))
         setShowRightIcon(container.scrollLeft < (container.scrollWidth - container.clientWidth));
       }
     };
