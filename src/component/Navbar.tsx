@@ -1,14 +1,27 @@
-import { ArrowTrendingUpIcon, ArrowUturnRightIcon, BellAlertIcon, BuildingOffice2Icon, ClipboardDocumentListIcon, ComputerDesktopIcon, GlobeAltIcon, PuzzlePieceIcon, UserCircleIcon } from '@heroicons/react/24/outline';
-import { useState, useRef, useEffect } from 'react';
+import {
+	ArrowTrendingUpIcon,
+	ArrowUturnRightIcon,
+	BellAlertIcon,
+	BuildingOffice2Icon,
+	ClipboardDocumentListIcon,
+	ComputerDesktopIcon,
+	GlobeAltIcon,
+	PuzzlePieceIcon,
+	UserCircleIcon,
+} from '@heroicons/react/24/outline';
+import { useState, useRef, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { SearchContext } from '../context/SearchContext';
 
-const Navbar = ({searchValue, handleSearchChange}: any) => {
+const Navbar = () => {
 	const [showSidebar, setShowSidebar] = useState(false);
-	// const [searchValue, setSearchValue] = useState('');
-
-	// const handleSearchChange = (event: any) => {
-  //   setSearchValue(event.target.value);
-  // };
 	const sidebarRef = useRef<any>(null);
+
+	const { setSearchValue, searchValue } = useContext(SearchContext);
+
+	const handleSearchChange = (event: any) => {
+    setSearchValue(event.target.value);
+  };
 
 	const toggleSidebar = () => {
 		setShowSidebar(!showSidebar);
@@ -30,12 +43,12 @@ const Navbar = ({searchValue, handleSearchChange}: any) => {
 	return (
 		<nav className='w-full text-white bg-primarydark shadow-sm flex items-center md:justify-between px-4 py-2 md:py-4 md:px-8'>
 			<div className={`flex items-center ${searchValue.length > 0 && 'md:hidden'}`}>
-				<p className='text-lg font-semibold mr-6'>LOGO</p>
+				<Link to='/' className='text-lg font-semibold mr-6'>LOGO</Link>
 				<div className='hidden md:flex space-x-4'>
-					<p className='hover:text-red-500 cursor-pointer'>Trending</p>
-					<p className='hover:text-red-500 cursor-pointer'>Gaming</p>
-					<p className='hover:text-red-500 cursor-pointer'>Infrastructure</p>
-					<p className='hover:text-red-500 cursor-pointer'>Recently Added</p>
+					<Link to='/trending' className='hover:text-red-500 cursor-pointer'>Trending</Link>
+					<Link to='/gaming' className='hover:text-red-500 cursor-pointer'>Gaming</Link>
+					<Link to='/infrastructure' className='hover:text-red-500 cursor-pointer'>Infrastructure</Link>
+					<Link to='/recent-projects' className='hover:text-red-500 cursor-pointer'>Recently Added</Link>
 				</div>
 			</div>
 
