@@ -49,7 +49,7 @@ const SearchResults = ({ searchQuery }: {searchQuery: string}) => {
       </div>
       <HorizontalFilters />
       <div className='flex justify-between'>
-        <div className="md:w-[50%] w-full px-2">
+        <div className="md:w-[50%] w-full md:mx-auto px-2">
           <SearchCard project={project1} />
           <SearchCard project={project2} />
           <SearchCard project={project3} />

@@ -8,8 +8,8 @@ import img7 from '../assets/images/ethglobal-7.d2375a47.svg'
 
 const SubscribeCard= () => {
   return (
-    <div className='bg-primarydark relative w-[85vw] md:w-[75vw] mx-auto h-[60vh] md:h-[40vh] flex flex-col justify-center items-center rounded-2xl text-white my-16'>
-      <div className="jsx-8c91e10c11059bad absolute top-4 mx-auto mb-8 flex h-[72px] w-[240px] items-center justify-center sm:mb-4
+    <div className='bg-primarydark relative w-[85vw] md:w-[75vw] mx-auto h-[60vh] md:h-96 flex flex-col justify-center items-center rounded-2xl text-white my-16'>
+      <div className="jsx-8c91e10c11059bad absolute top-4 mx-auto  flex h-[72px] w-[240px] items-center justify-center sm:mb-4
                 sm:h-[68px] sm:w-[192px]">
         <div className="jsx-8c91e10c11059bad animation-1 absolute left-0 h-10 w-10 flex-none select-none sm:h-8 sm:w-8">
           <img alt="ethglobal-one" loading="lazy" width="40" height="40" decoding="async" data-nimg="1" src={img1}/>
@@ -33,11 +33,13 @@ const SubscribeCard= () => {
         <img alt="ethglobal-seven" loading="lazy" width="40" height="40" decoding="async" data-nimg="1" src={img7} />
         </div>
       </div>
-      <h1 className='font-extrabold text-xl top-24 md:text-5xl absolute'>Subscribe to receive Alpha!</h1>
-      <p className='w-[80vw] text-sm md:text-lg md:w-[35vw] tracking-wider mt-4 text-center absolute'>Join 4.3k subscribers from renowned companies worldwide and get a weekly update in your inbox. Stay updated on the latest and finest projects and product updates.</p>
-      <div className='mt-8 absolute bottom-12'>
+      <div className='absolute justify-center flex flex-col items-center mt-[4rem]'>
+      <h1 className='font-extrabold text-xl  top-24 md:text-4xl'>Subscribe to receive Alpha!</h1>
+      <p className='w-[80vw] text-sm md:text-lg md:w-[600px] tracking-wider mt-4 text-center'>Join 4.3k subscribers from renowned companies worldwide and get a weekly update in your inbox. Stay updated on the latest and finest projects and product updates.</p>
+      <div className='mt-8 bottom-12'>
         <input placeholder='you@example.com' className='p-2 md:w-[20vw] rounded-l-md outline-none text-black' />
         <button className='p-2 bg-secondarydark rounded-r-md'>Subscribe</button>
+      </div>
       </div>
     </div>
   )
