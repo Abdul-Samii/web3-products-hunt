@@ -6,9 +6,9 @@ const SearchCard = ({ project, className }: any) => {
   const truncatedAddress = address.substring(0, 6) + '.....' + address.substring(address.length - 6);
 
   return (
-    <div className={`flex md:flex-row relative py-2 md:py-5 shadow-sm border-[1px] rounded-md ${className}`}>
+    <div className={`flex md:flex-row relative py-2 md:py-5 bg-slate-50 shadow-sm border-[1px] rounded-md ${className}`}>
       <img src={logo} className='md:h-28 h-20 w-20 md:w-36 rounded-md border-[1px] p-2 md:ml-4 md:mr-6 self-center' />
-      <div className='md:flex-grow ml-2 md:-ml-4'>
+      <div className='md:flex-grow ml-2 md:-ml-4 max-w-52 md:max-w-96'>
         <div className='flex md:flex-row space-x-2 md:items-center md:mb-2'>
           <h3 className='md:text-2xl font-semibold'>{projectName}</h3>
           <p className='md:text-2xl text-gray-400 font-bold'>#</p>

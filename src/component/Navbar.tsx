@@ -10,17 +10,21 @@ import {
 	UserCircleIcon,
 } from '@heroicons/react/24/outline';
 import { useState, useRef, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { SearchContext } from '../context/SearchContext';
 
 const Navbar = () => {
 	const [showSidebar, setShowSidebar] = useState(false);
+	const [changeColor, setChangeColor] = useState(false);
 	const sidebarRef = useRef<any>(null);
+
+	const location = useLocation();
+	const navigate = useNavigate();
 
 	const { setSearchValue, searchValue } = useContext(SearchContext);
 
-	const handleSearchChange = (event: any) => {
-    setSearchValue(event.target.value);
+	const handleSearchChange = (value: string) => {
+    setSearchValue(value);
   };
 
 	const toggleSidebar = () => {
@@ -32,6 +36,7 @@ const Navbar = () => {
 			setShowSidebar(false);
 		}
 	};
+	const clearSearch = () => setSearchValue('')
 
 	useEffect(() => {
 		document.addEventListener('mousedown', handleClickOutside);
@@ -40,37 +45,44 @@ const Navbar = () => {
 		};
 	}, []);
 
+	useEffect(() => {
+		if ((window.location.pathname !== '/web3-products-hunt' && window.location.pathname !== '/web3-products-hunt/') || searchValue) {
+			setChangeColor(true);
+			if (searchValue) navigate('/web3-products-hunt')
+		} else {
+			setChangeColor(false);
+		}
+	}, [location.pathname, searchValue])
+
 	return (
-		<nav className='w-full text-white bg-primarydark shadow-sm flex items-center md:justify-between px-4 py-2 md:py-4 md:px-8'>
-			<div className={`flex items-center ${searchValue.length > 0 && 'md:hidden'}`}>
-				<Link to='/' className='text-lg font-semibold mr-6'>LOGO</Link>
+		<nav className={`w-full shadow-sm flex items-center md:justify-between px-4 py-2 md:py-4 md:px-8 ${changeColor && 'bg-[#3341BD] text-white'}`}>
+			<div className={`flex items-center  ${searchValue.length > 0 && 'md:hidden'}`}>
+				<Link to='/web3-products-hunt' className='text-lg font-bold mr-2 text-secondarydark'><span className='text-secondarydark font-thin'>YOUR</span>LOGO</Link>
+				<div className='border-r-2 h-6 bg-red-400 mr-2' />
 				<div className='hidden md:flex space-x-4'>
-					<Link to='/trending' className='hover:text-red-500 cursor-pointer'>Trending</Link>
-					<Link to='/gaming' className='hover:text-red-500 cursor-pointer'>Gaming</Link>
-					<Link to='/infrastructure' className='hover:text-red-500 cursor-pointer'>Infrastructure</Link>
-					<Link to='/recent-projects' className='hover:text-red-500 cursor-pointer'>Recently Added</Link>
+					<p onClick={() => handleSearchChange('Trending')} className='hover:text-[#3341BD] cursor-pointer'>Trending</p>
+					<p onClick={() => handleSearchChange('Gaming')} className='hover:text-[#3341BD] cursor-pointer'>Gaming</p>
+					<p onClick={() => handleSearchChange('Infrastructure')} className='hover:text-[#3341BD] cursor-pointer'>Infrastructure</p>
+					<p onClick={() => handleSearchChange('Recent projects')} className='hover:text-[#3341BD] cursor-pointer'>Recently Added</p>
 				</div>
 			</div>
 
 			<div className={`md:flex md:items-center md:justify-end space-x-2 ${searchValue.length > 0 ? 'md:w-full' : 'w-1/2'}`}>
-				<input
-					placeholder='Search here'
-					value={searchValue}
-					onChange={handleSearchChange}
-					className={`border-[1px] p-1 md:p-2 md:w-full w-56 text-black rounded-md bg-gray-100 outline-none ${searchValue.length > 0 && 'md:rounded-full md:p-3'}`}
-				/>
-				<select className={`hidden md:inline-block border-[1px] py-2 px-1 text-black outline-none rounded-md ${searchValue.length == 0 && 'md:hidden'}`}>
-					<option>Popularity</option>
-					<option>Most Recent</option>
-					<option>Old</option>
-					<option>Stable</option>
-				</select>
+				<div className='relative w-full flex'>
+					<input
+						placeholder='Search here'
+						value={searchValue}
+						onChange={(e) => handleSearchChange(e.target.value)}
+						className={`border-[1px] p-1 text-sm md:p-2 md:w-full w-56 text-black rounded-md bg-gray-100 outline-none ${searchValue.length > 0 && 'md:rounded-full md:p-3'}`}
+					/>
+					{searchValue && <p onClick={clearSearch} className='text-nowrap absolute right-6 underline text-secondarydark cursor-pointer text-xs top-[30%]'>Clear search</p>}
+				</div>
 				<p className='bg-secondarylight p-2 rounded-md hidden md:inline'>
 					<BellAlertIcon className='h-6 text-black bell-animation'/>
 				</p>
 				<div className='md:flex space-x-2 hidden'>
 					<p className='w-24 text-center m-auto'>About Us</p>
-					<p className='bg-secondarylight text-black p-2 rounded-md w-24 text-center'>Signup</p>
+					<Link to='/web3-products-hunt/auth' className='bg-secondarylight text-black p-2 rounded-md w-24 text-center'>Signup</Link>
 				</div>
 			</div>
 
@@ -99,14 +111,14 @@ const Navbar = () => {
 			{/* Sidebar */}
 			{showSidebar && (
 				<div ref={sidebarRef} className='md:hidden absolute inset-y-0 left-0 z-50 bg-secondarydark text-white w-64'>
-					<p className='px-4 py-4 hover:bg-primarydark w-full flex'><p className='my-auto mx-2'><ArrowTrendingUpIcon className='h-4' /></p>Trending</p>
-					<p className='px-4 py-4 hover:bg-primarydark w-full flex'><p className='my-auto mx-2'><PuzzlePieceIcon className='h-4' /></p>Gaming</p>
-					<p className='px-4 py-4 hover:bg-primarydark w-full flex'><p className='my-auto mx-2'><BuildingOffice2Icon className='h-4' /></p>Infrastructure</p>
-					<p className='px-4 py-4 hover:bg-primarydark w-full flex'><p className='my-auto mx-2'><ComputerDesktopIcon className='h-4' /></p>Hardware</p>
-					<p className='px-4 py-4 hover:bg-primarydark w-full flex'><p className='my-auto mx-2'><ClipboardDocumentListIcon className='h-4' /></p>Recently Added</p>
-					<p className='px-4 py-4 hover:bg-primarydark w-full flex'><p className='my-auto mx-2'><GlobeAltIcon className='h-4' /></p>About Us</p>
-					<p className='px-4 py-4 hover:bg-primarydark w-full flex'><p className='my-auto mx-2'><BellAlertIcon className='h-4' /></p>Notifications</p>
-					<p className='px-4 py-4 hover:bg-primarydark w-full flex'><p className='my-auto mx-2'><ArrowUturnRightIcon className='h-4' /></p>Signup</p>
+					<p onClick={() => handleSearchChange('Trending')} className='px-4 py-4 hover:bg-primarydark w-full flex'><p className='my-auto mx-2'><ArrowTrendingUpIcon className='h-4' /></p>Trending</p>
+					<p onClick={() => handleSearchChange('Gaming')} className='px-4 py-4 hover:bg-primarydark w-full flex'><p className='my-auto mx-2'><PuzzlePieceIcon className='h-4' /></p>Gaming</p>
+					<p onClick={() => handleSearchChange('Infrastructure')} className='px-4 py-4 hover:bg-primarydark w-full flex'><p className='my-auto mx-2'><BuildingOffice2Icon className='h-4' /></p>Infrastructure</p>
+					<p onClick={() => handleSearchChange('Hardware')} className='px-4 py-4 hover:bg-primarydark w-full flex'><p className='my-auto mx-2'><ComputerDesktopIcon className='h-4' /></p>Hardware</p>
+					<p onClick={() => handleSearchChange('Recent projects')} className='px-4 py-4 hover:bg-primarydark w-full flex'><p className='my-auto mx-2'><ClipboardDocumentListIcon className='h-4' /></p>Recently Added</p>
+					<Link to='/web3-products-hunt/about' className='px-4 py-4 hover:bg-primarydark w-full flex'><p className='my-auto mx-2'><GlobeAltIcon className='h-4' /></p>About Us</Link>
+					<Link to='/web3-products-hunt/notifications' className='px-4 py-4 hover:bg-primarydark w-full flex'><p className='my-auto mx-2'><BellAlertIcon className='h-4' /></p>Notifications</Link>
+					<Link to='/web3-products-hunt/auth' className='px-4 py-4 hover:bg-primarydark w-full flex'><p className='my-auto mx-2'><ArrowUturnRightIcon className='h-4' /></p>Signup</Link>
 				</div>
 			)}
 		</nav>

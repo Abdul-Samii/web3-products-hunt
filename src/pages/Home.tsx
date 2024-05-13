@@ -1,6 +1,5 @@
 import SearchResults from '../component/search/SearchResults';
 import Banner from '../component/Banner';
-import { Proposals } from '../component/listings';
 import SubscribeCard from '../component/SubscribeCard';
 import { Footer } from '../component/footer';
 import { useContext } from 'react';
@@ -13,10 +12,11 @@ const Home = () => {
   return (
     <div className='h-[100vh]'>
       {
-        searchValue ? <SearchResults searchQuery={searchValue} /> :(
+        searchValue ? <SearchResults /> :(
           <>
           <Banner />
-          <Proposals />
+          {/* <Proposals /> */}
+          <div className='h-96' />
           <SubscribeCard />
           <Footer />
           </>
