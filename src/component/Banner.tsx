@@ -7,7 +7,7 @@ import { useContext } from 'react';
 import { SearchContext } from '../context/SearchContext';
 
 const Banner = () => {
-  const { setSearchValue } = useContext(SearchContext);
+  const { setSearchValue, setListModal } = useContext(SearchContext);
   const handleSearchChange = (value: string) => {
     setSearchValue(value);
   };
@@ -23,7 +23,7 @@ const Banner = () => {
         <p className='text-center w-[30vw] text-white mt-4 hidden md:inline animate-fade-in'>Curated directory of top decentralized applications, blockchain infrastructure and crypto projects.</p>
         <div className='space-x-3  mt-4 md:mt-12 relative flex md:space-x-4'>
           <button onClick={() => handleSearchChange('Metaverse')} className='w-36 bg-white shadow-md hover:border-[1px] border-primarydark py-2 md:py-2 rounded-md relative'>Explore</button>
-          <button className='w-36 bg-primarydark shadow-md hover:bg-secondarydark text-white py-2 md:py-2 rounded-md relative'>List a Project</button>
+          <button onClick={() => setListModal(true)} className='w-36 bg-primarydark shadow-md hover:bg-secondarydark text-white py-2 md:py-2 rounded-md relative'>List a Project</button>
         </div>
         {/* Left side icons */}
         <div className="absolute left-4 md:left-[15%] top-1/2 transform -translate-y-1/2 flex-col items-center space-y-4 md:space-y-16 hidden md:flex">

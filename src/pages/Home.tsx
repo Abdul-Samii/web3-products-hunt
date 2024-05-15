@@ -4,6 +4,8 @@ import SubscribeCard from '../component/SubscribeCard';
 import { Footer } from '../component/footer';
 import { useContext } from 'react';
 import { SearchContext } from '../context/SearchContext';
+import RecentlyAdded from '../component/listings/RecentlyAdded';
+import NewProjectForm from '../component/addform/NewProjectForm';
 
 const Home = () => {
 
@@ -16,9 +18,11 @@ const Home = () => {
           <>
           <Banner />
           {/* <Proposals /> */}
-          <div className='h-96' />
+          <RecentlyAdded />
+          <div className='h-28' />
           <SubscribeCard />
           <Footer />
+          <NewProjectForm />
           </>
         )
       }

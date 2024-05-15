@@ -82,7 +82,7 @@ const Navbar = () => {
 				</p>
 				<div className='md:flex space-x-2 hidden'>
 					<p className='w-24 text-center m-auto'>About Us</p>
-					<Link to='/web3-products-hunt/auth' className='bg-secondarylight text-black p-2 rounded-md w-24 text-center'>Signup</Link>
+					<Link onClick={clearSearch} to='/web3-products-hunt/auth' className='bg-secondarylight text-black p-2 rounded-md w-24 text-center'>Signup</Link>
 				</div>
 			</div>
 
@@ -118,7 +118,7 @@ const Navbar = () => {
 					<p onClick={() => handleSearchChange('Recent projects')} className='px-4 py-4 hover:bg-primarydark w-full flex'><p className='my-auto mx-2'><ClipboardDocumentListIcon className='h-4' /></p>Recently Added</p>
 					<Link to='/web3-products-hunt/about' className='px-4 py-4 hover:bg-primarydark w-full flex'><p className='my-auto mx-2'><GlobeAltIcon className='h-4' /></p>About Us</Link>
 					<Link to='/web3-products-hunt/notifications' className='px-4 py-4 hover:bg-primarydark w-full flex'><p className='my-auto mx-2'><BellAlertIcon className='h-4' /></p>Notifications</Link>
-					<Link to='/web3-products-hunt/auth' className='px-4 py-4 hover:bg-primarydark w-full flex'><p className='my-auto mx-2'><ArrowUturnRightIcon className='h-4' /></p>Signup</Link>
+					<Link onClick={clearSearch} to='/web3-products-hunt/auth' className='px-4 py-4 hover:bg-primarydark w-full flex'><p className='my-auto mx-2'><ArrowUturnRightIcon className='h-4' /></p>Signup</Link>
 				</div>
 			)}
 		</nav>
