@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import Home from '../pages/Home';
 import Category from '../pages/Category';
 import Auth from '../pages/auth';
+import ProfileDetail from '../pages/ProfileDetail';
 
 const PublicRoutes = () => {
   return (
@@ -14,6 +15,7 @@ const PublicRoutes = () => {
       <Route path='/web3-products-hunt/recent-projects' element={<Category />} />
       <Route path='/web3-products-hunt/explore' element={<Category />} />
       <Route path='/web3-products-hunt/auth' element={<Auth />} />
+      <Route path='/web3-products-hunt/profile-details' element={<ProfileDetail />} />
     </Routes>
   )
 }

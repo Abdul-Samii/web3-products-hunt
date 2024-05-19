@@ -161,3 +161,12 @@
 /* *{
   border: 1px solid black;
 } */
+
+/* Add this to your CSS file */
+.twitter-feed {
+  max-width: 70vw;
+}
+
+.twitter-feed h1 {
+  margin-bottom: 20px;
+}
