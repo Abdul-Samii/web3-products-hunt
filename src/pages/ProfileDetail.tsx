@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { FaShareSquare } from 'react-icons/fa';
 import { BiSolidUpArrow } from 'react-icons/bi';
-import logo from '../assets/images/binancelabs_cover.jpeg';
 import { Links, OverView, TwitterFeed, YoutubeEmbed } from '../component/profiledetails';
+import { useLocation } from 'react-router-dom';
 
 interface SectionProps {
   section: 'overview' | 'links' | 'videos' | 'updates';
@@ -10,22 +10,22 @@ interface SectionProps {
 
 const ProfileDetail: React.FC = () => {
   const [activeSection, setActiveSection] = useState<SectionProps['section']>('overview');
+  const location = useLocation();
+  const { project } = location.state;
 
   return (
     <>
-      <div className='h-44 bg-red-300 w-full'>
-        <img src={logo} className='object-cover h-44 w-full' />
+      <div className='h-44 w-full'>
+        <img src={project.coverImg} className='object-cover h-44 w-full' />
       </div>
       <div className='mx-4 mt-4'>
         <div className='flex flex-col md:flex-row'>
-          <img src={logo} className='h-20 w-28' />
+          <img src={project.logo} className='h-20 w-28' />
           <div className='md:ml-2 mt-2 md:mt-0'>
-            <h2 className='text-2xl font-bold'>Binance</h2>
-            <p>NFT raffles reimagined.</p>
+            <h2 className='text-2xl font-bold'>{project.name}</h2>
+            <p>{project.tldr}</p>
             <div className='flex space-x-2 mt-2'>
-              <p className='px-2 rounded-sm border-[1px] bg-secondarylight text-xs'>Marketplace</p>
-              <p className='px-2 rounded-sm border-[1px] bg-secondarylight text-xs'>NFT</p>
-              <p className='text-xs ml-2'>+2 more</p>
+              {project.tags.map((item: any, index: number) => <p key={index} className='px-2 rounded-sm border-[1px] bg-secondarylight text-xs'>{item.name}</p>)}
               <FaShareSquare className='text-gray-500' />
             </div>
           </div>
@@ -47,10 +47,17 @@ const ProfileDetail: React.FC = () => {
             <p className='text-xs md:text-sm'>79</p>
           </div>
         </div>
-        {activeSection === 'overview' && <OverView />}
-        {activeSection === 'links' && <Links />}
-        {activeSection === 'videos' && <YoutubeEmbed channelId='UCfYw6dhiwGBJQY_-Jcs8ozw' />}
-        {activeSection === 'updates' && <TwitterFeed username='binance' />}
+        {activeSection === 'overview' && (
+          <>
+            <OverView project={project} />
+            <Links project={project} />
+            <YoutubeEmbed channelId={project.links.youtube} />
+            <TwitterFeed username={project.links.twitter} />
+          </>
+        )}
+        {activeSection === 'links' && <Links project={project} />}
+        {activeSection === 'videos' && <YoutubeEmbed channelId={project.links.youtube} />}
+        {activeSection === 'updates' && <TwitterFeed username={project.links.twitter} />}
       </div>
     </>
   );

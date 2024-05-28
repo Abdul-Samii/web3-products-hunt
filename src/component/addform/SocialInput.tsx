@@ -23,18 +23,22 @@ const iconMap: any = {
   appstore: { component: <FaAppStoreIos className='text-gray-600 rounded-md' />, placeholder: 'app store link', label: 'App Store'},
   playstore: { component: <IoLogoGooglePlaystore className='text-gray-600 rounded-md' />, placeholder: 'play store link', label: 'Play Store'},
 };
-
-const SocialInput = () => {
+const SocialInput = ({ links, setLinks }: any) => {
   const [activeInputs, setActiveInputs] = useState(['facebook', 'twitter', 'youtube', 'tiktok']);
 
-  const handleAddInput = (type: string) => {
+  const handleAddInput = (type: any) => {
     if (!activeInputs.includes(type)) {
       setActiveInputs([...activeInputs, type]);
     }
   };
 
-  const handleRemoveInput = (type: string) => {
+  const handleRemoveInput = (type: any) => {
     setActiveInputs(activeInputs.filter(input => input !== type));
+    setLinks({ ...links, [type]: '' });
+  };
+
+  const handleInputChange = (type: any, value: any) => {
+    setLinks({ ...links, [type]: value });
   };
 
   return (
@@ -48,6 +52,8 @@ const SocialInput = () => {
               <div className='p-2'>{iconMap[type].component}</div>
               <input
                 placeholder={iconMap[type].placeholder}
+                value={links[type] || ''}
+                onChange={(e) => handleInputChange(type, e.target.value)}
                 className='border-[1px] text-sm p-2 rounded-md outline-none flex-grow'
               />
               <button onClick={() => handleRemoveInput(type)} className='text-red-500 p-2'>✕</button>

@@ -36,21 +36,25 @@ const YoutubeEmbed: React.FC<YoutubeEmbedProps> = ({ channelId }: { channelId: s
 
   return (
     <div className="youtube-embed space-y-4 mt-8">
-      {videos.map((video) => (
+      { channelId ?
+      videos.map((video) => (
         <div key={video.id.videoId} className="video-item flex flex-col md:flex-row border-b-2 w-full p-4">
           <iframe
             className="w-full md:w-96 rounded-md"
-            height="120px"
+            height="180px"
             src={`https://www.youtube.com/embed/${video.id.videoId}`}
             allowFullScreen
             title={video.snippet.title}
           ></iframe>
-          <div className='md:ml-4 flex flex-col justify-center mt-4 md:mt-0'>
+          <div className='md:ml-4 flex flex-col mt-4 md:mt-0'>
             <h3 className='font-extrabold text-lg'>{video.snippet.title}</h3>
             <p className='text-gray-400 font-semibold'>{video.snippet.channelTitle}</p>
           </div>
         </div>
-      ))}
+      ))
+      :
+      <p>No youtube channel id found</p>
+    }
     </div>
   );
 };
