@@ -1,6 +1,7 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useContext } from 'react';
 import FilterItem from './FilterItem';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
+import { SearchContext } from '../../context/SearchContext';
 
 const HorizontalFilters: React.FC = () => {
   const filters = [
@@ -10,7 +11,10 @@ const HorizontalFilters: React.FC = () => {
     'Blockchain', 'Bloging Platforms', 'Bridges', 'Cross-Chain', 'Crowdfunding', 
     'DAO', 'DeFi', 'Exchange'
   ];
-
+  const { setSearchValue, searchValue } = useContext(SearchContext);
+  const handleSearchChange = (value: string) => {
+    setSearchValue(searchValue + ','+ value);
+  };
   const containerRef = useRef<HTMLDivElement>(null);
   const [showLeftIcon, setShowLeftIcon] = useState(false);
   const [showRightIcon, setShowRightIcon] = useState(true);
@@ -77,7 +81,7 @@ const HorizontalFilters: React.FC = () => {
         )}
         <div className='flex p-1 space-x-2 w-full overflow-x-hidden' ref={containerRef}>
           {filters.map((filterItem, index) => (
-            <FilterItem key={index} filterItem={filterItem} />
+            <FilterItem onClick={() => handleSearchChange(filterItem)} key={index} filterItem={filterItem} />
           ))}
         </div>
         {showRightIcon && (
@@ -86,23 +90,12 @@ const HorizontalFilters: React.FC = () => {
           </button>
         )}
       </div>
-      <div className='flex space-x-3 ml-4'>
-        <select className='border-[1px] py-2 px-3 rounded-md outline-none'>
-          <option>Filter by</option>
-          <option>Ethereum</option>
-          <option>Polygon</option>
-          <option>Arbitrum</option>
-          <option>Optimism</option>
-          <option>Base</option>
-          <option>BND</option>
-        </select>
-        <select className='border-[1px] py-2 px-3 rounded-md outline-none'>
-          <option>Sort by</option>
-          <option>Votes</option>
-          <option>Likes</option>
-          <option>Visits</option>
-        </select>
-      </div>
+      <select className='border-[1px] px-3 ml-4 rounded-md outline-none'>
+        <option>Sort by</option>
+        <option>Votes</option>
+        <option>Likes</option>
+        <option>Visits</option>
+      </select>
     </div>
   );
 };

@@ -1,22 +1,21 @@
-import { useState } from 'react';
-import { BoltIcon, QuestionMarkCircleIcon, StarIcon } from "@heroicons/react/24/outline";
+import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import { Link } from 'react-router-dom';
 
 const ListingIntro = ({ title }: any) => {
-  const [selectedTab, setSelectedTab] = useState('latest');
+  // const [selectedTab, setSelectedTab] = useState('latest');
 
-  const handleTabClick = (tab: any) => {
-    setSelectedTab(tab);
-  };
+  // const handleTabClick = (tab: any) => {
+  //   setSelectedTab(tab);
+  // };
 
   return (
     <div className='relative'>
-      <div className='flex justify-between md:mx-32 border-b-[1px] pb-4 mt-12 mx-8'>
+      <div className='flex justify-between md:mx-56 border-b-[1px] pb-4 mt-12 mx-8'>
         <div className='flex space-x-2'>
           <h2 className='my-auto font-extrabold text-xl'>{title}</h2>
           <QuestionMarkCircleIcon className="h-5 my-auto text-gray-500" />
         </div>
-        <div className='flex space-x-4'>
+        {/* <div className='flex space-x-4'>
           <div
             className={`flex w-fit m-auto space-x-2 text-xl cursor-pointer ${selectedTab === 'latest' ? 'text-black' : 'text-gray-500'}`}
             onClick={() => handleTabClick('latest')}
@@ -31,7 +30,7 @@ const ListingIntro = ({ title }: any) => {
             <StarIcon className='h-5 my-auto' />
             <p className='hidden md:inline'>Popular</p>
           </div>
-        </div>
+        </div> */}
         <Link to='/explore' className='hidden md:inline py-2 px-4 border-[1px] rounded-md font-semibold'>Explore all</Link>
       </div>
     </div>

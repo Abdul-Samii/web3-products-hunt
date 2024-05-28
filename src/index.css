@@ -109,6 +109,37 @@
   );
 }
 
+@keyframes slide-up {
+  from {
+    transform: translateY(50%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 1s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 1s ease-out forwards;
+}
+
+.back {
+  background-image: url('./assets/images/background.webp');
+}
 
 .honeycomb {
   position: absolute;
@@ -125,4 +156,17 @@
   .honeycomb-container{
     height: 40%;
   }
+}
+
+/* *{
+  border: 1px solid black;
+} */
+
+/* Add this to your CSS file */
+.twitter-feed {
+  max-width: 70vw;
+}
+
+.twitter-feed h1 {
+  margin-bottom: 20px;
 }
