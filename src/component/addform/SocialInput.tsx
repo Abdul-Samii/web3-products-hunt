@@ -43,7 +43,7 @@ const SocialInput = ({ links, setLinks }: any) => {
 
   return (
     <>
-      <h1 className='text-primarydark font-semibold'>Social</h1>
+      <h1 className='text-primarydark font-semibold mt-6'>Social</h1>
       <div className='grid grid-cols-1 md:grid-cols-2 gap-4 w-full'>
         {activeInputs.map((type) => (
           <div key={type} className='flex flex-col'>

@@ -1,6 +1,5 @@
 import Multiselect from 'multiselect-react-dropdown';
 import { useContext, useState } from 'react';
-import Modal from 'react-modal';
 import { SearchContext } from '../../context/SearchContext';
 import SocialInput from './SocialInput';
 import { ProjectContext } from '../../context/ProjectContext';
@@ -36,7 +35,7 @@ const NewProjectForm = () => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [loading, setLoading] = useState(false); // State to control the loading overlay
 
-  const { listModal, setListModal } = useContext(SearchContext);
+  const { setListModal } = useContext(SearchContext);
   const { createNewProject } = useContext(ProjectContext);
 
   function closeModal() {
@@ -139,115 +138,92 @@ const NewProjectForm = () => {
   ];
 
   return (
-    <div>
-      <Modal
-        isOpen={listModal}
-        onRequestClose={closeModal}
-        contentLabel="Example Modal"
-        style={{
-          content: {
-            top: '50%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            transform: 'translate(-50%, -50%)',
-            padding: '20px',
-            height: '80%',
-            width: '90%',
-            maxWidth: '800px', // Increased width for better appearance
-            overflow: 'auto',
-          },
-          overlay: {
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          },
-        }}
-      >
-         {loading && <div className="overlay"></div>} {/* Overlay to blur background and disable content */}
-         {loading && <Loader progress={uploadProgress} />} {/* Loader to show upload progress */}
-        <div className='mx-4'>
-          <h2 className='font-bold text-primarydark text-center md:text-left'>Add a Project</h2>
-          <div className='mt-4 grid grid-cols-1 md:grid-cols-2 gap-4'>
-            <div className='col-span-1 md:col-span-2'>
-              <label className='text-xs'>Project name</label>
-              <input
-                placeholder='Project name'
-                value={projectName}
-                onChange={(e) => setProjectName(e.target.value)}
-                className='border-[1px] w-full text-sm p-2 rounded-sm outline-none'
-              />
-            </div>
-            <div className='col-span-1 md:col-span-1'>
-              <label className='text-xs'>Categories</label>
-              <Multiselect
-                options={categories}
-                selectedValues={selectedCategoryOptions.map(id => categories.find(cat => cat.id === id))}
-                onSelect={handleAddCategoryOption}
-                onRemove={handleRemoveCategoryOption}
-                displayValue="name"
-                className="border-[1px] w-full text-sm p-2 rounded-sm outline-none"
-              />
-            </div>
-            <div className='col-span-1 md:col-span-1'>
-              <label className='text-xs'>Tags</label>
-              <Multiselect
-                options={tags}
-                selectedValues={selectedTagOptions.map(id => tags.find(tag => tag.id === id))}
-                onSelect={handleAddTagOption}
-                onRemove={handleRemoveTagOption}
-                displayValue="name"
-                className="border-[1px] w-full text-sm p-2 rounded-sm outline-none"
-              />
-            </div>
-            <div className='col-span-1 md:col-span-2'>
-              <label className='text-xs'>Project Overview</label>
-              <textarea
-                placeholder='Project overview'
-                value={overview}
-                onChange={(e) => setOverview(e.target.value)}
-                className='border-[1px] w-full text-sm p-2 rounded-sm outline-none'
-              />
-            </div>
-            <div className='col-span-1 md:col-span-2'>
-              <label className='text-xs'>Project TL;DR</label>
-              <textarea
-                placeholder='Project TL;DR'
-                value={tldr}
-                onChange={(e) => setTldr(e.target.value)}
-                className='border-[1px] w-full text-sm p-2 rounded-sm outline-none'
-              />
-            </div>
-            <div className='col-span-1 md:col-span-1'>
-              <label className='text-xs'>Logo Image</label>
-              <div className="flex items-center">
-                <input
-                  type='file'
-                  onChange={handleLogoChange}
-                  className='border-[1px] w-full text-sm p-2 rounded-sm outline-none'
-                />
-                <button onClick={() => handleUpload(logoImage, 1)} className="ml-2 px-4 py-2 bg-primarylight text-white rounded-md">Upload</button>
-              </div>
-              {logoUrl && <img src={logoUrl} alt="Logo Preview" className="mt-2 w-full" />}
-            </div>
-            <div className='col-span-1 md:col-span-1'>
-              <label className='text-xs'>Cover Image</label>
-              <div className="flex items-center">
-                <input
-                  type='file'
-                  onChange={handleCoverChange}
-                  className='border-[1px] w-full text-sm p-2 rounded-sm outline-none'
-                />
-                <button onClick={() => handleUpload(coverImage, 2)} className="ml-2 px-4 py-2 bg-primarylight text-white rounded-md">Upload</button>
-              </div>
-              {coverUrl && <img src={coverUrl} alt="Cover Preview" className="mt-2 w-full" />}
-            </div>
+    <div className='md:mx-[20%] mt-12'>
+      {loading && <div className="overlay"></div>}
+      {loading && <Loader progress={uploadProgress} />}
+      <div className='mx-4'>
+        <h2 className='font-bold text-primarydark text-center md:text-left'>Add a Project</h2>
+        <div className='mt-4 grid grid-cols-1 md:grid-cols-2 gap-4'>
+          <div className='col-span-1 md:col-span-2'>
+            <label className='text-xs'>Project name</label>
+            <input
+              placeholder='Project name'
+              value={projectName}
+              onChange={(e) => setProjectName(e.target.value)}
+              className='border-[1px] w-full text-sm p-2 rounded-sm outline-none'
+            />
           </div>
-          <SocialInput links={links} setLinks={setLinks} />
-          <div className='flex flex-col md:flex-row mt-4 space-y-2 md:space-y-0 md:space-x-2'>
-            <button onClick={closeModal} className='bg-white w-full p-2 rounded-sm border-[1px]'>Close</button>
-            <button onClick={handleCreateProject} className='bg-primarylight text-white w-full p-2 rounded-sm'>Create</button>
+          <div className='col-span-1 md:col-span-1'>
+            <label className='text-xs'>Categories</label>
+            <Multiselect
+              options={categories}
+              selectedValues={selectedCategoryOptions.map(id => categories.find(cat => cat.id === id))}
+              onSelect={handleAddCategoryOption}
+              onRemove={handleRemoveCategoryOption}
+              displayValue="name"
+              className="border-[1px] w-full text-sm p-2 rounded-sm outline-none"
+            />
+          </div>
+          <div className='col-span-1 md:col-span-1'>
+            <label className='text-xs'>Tags</label>
+            <Multiselect
+              options={tags}
+              selectedValues={selectedTagOptions.map(id => tags.find(tag => tag.id === id))}
+              onSelect={handleAddTagOption}
+              onRemove={handleRemoveTagOption}
+              displayValue="name"
+              className="border-[1px] w-full text-sm p-2 rounded-sm outline-none"
+            />
+          </div>
+          <div className='col-span-1 md:col-span-2'>
+            <label className='text-xs'>Project Overview</label>
+            <textarea
+              placeholder='Project overview'
+              value={overview}
+              onChange={(e) => setOverview(e.target.value)}
+              className='border-[1px] w-full text-sm p-2 rounded-sm outline-none'
+            />
+          </div>
+          <div className='col-span-1 md:col-span-2'>
+            <label className='text-xs'>Project TL;DR</label>
+            <textarea
+              placeholder='Project TL;DR'
+              value={tldr}
+              onChange={(e) => setTldr(e.target.value)}
+              className='border-[1px] w-full text-sm p-2 rounded-sm outline-none'
+            />
+          </div>
+          <div className='col-span-1 md:col-span-1'>
+            <label className='text-xs'>Logo Image</label>
+            <div className="flex items-center">
+              <input
+                type='file'
+                onChange={handleLogoChange}
+                className='border-[1px] w-full text-sm p-2 rounded-sm outline-none'
+              />
+              <button onClick={() => handleUpload(logoImage, 1)} className="ml-2 px-4 py-2 bg-primarylight text-white rounded-md">Upload</button>
+            </div>
+            {logoUrl && <img src={logoUrl} alt="Logo Preview" className="mt-2 w-full" />}
+          </div>
+          <div className='col-span-1 md:col-span-1'>
+            <label className='text-xs'>Cover Image</label>
+            <div className="flex items-center">
+              <input
+                type='file'
+                onChange={handleCoverChange}
+                className='border-[1px] w-full text-sm p-2 rounded-sm outline-none'
+              />
+              <button onClick={() => handleUpload(coverImage, 2)} className="ml-2 px-4 py-2 bg-primarylight text-white rounded-md">Upload</button>
+            </div>
+            {coverUrl && <img src={coverUrl} alt="Cover Preview" className="mt-2 w-full" />}
           </div>
         </div>
-      </Modal>
+        <SocialInput links={links} setLinks={setLinks} />
+        <div className='flex flex-col md:flex-row mt-4 space-y-2 md:space-y-0 md:space-x-2'>
+          <button onClick={closeModal} className='bg-white w-full p-2 rounded-sm border-[1px]'>Close</button>
+          <button onClick={handleCreateProject} className='bg-primarylight text-white w-full p-2 rounded-sm'>Create</button>
+        </div>
+      </div>
     </div>
   );
 }
