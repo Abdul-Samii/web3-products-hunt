@@ -4,17 +4,18 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import { SearchContext } from '../../context/SearchContext';
 
 const HorizontalFilters: React.FC = () => {
-  const filters = [
-    'Accounting', 'Action', 'Analytics', 'Art', 'Art & Culture', 'Block Explorers', 
-    'Blockchain', 'Bloging Platforms', 'Bridges', 'Cross-Chain', 'Crowdfunding', 
-    'DAO', 'DeFi', 'Exchange', 'Accounting', 'Action', 'Analytics', 'Art', 'Art & Culture', 'Block Explorers', 
-    'Blockchain', 'Bloging Platforms', 'Bridges', 'Cross-Chain', 'Crowdfunding', 
-    'DAO', 'DeFi', 'Exchange'
-  ];
-  const { setSearchValue, searchValue } = useContext(SearchContext);
-  const handleSearchChange = (value: string) => {
-    setSearchValue(searchValue + ','+ value);
+  const { setSearchFilteredProjects, searchProjects, tags } = useContext(SearchContext);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
+  const handleTagClick = (tagId: string) => {
+    // Toggle the selection state of the tag
+    if (selectedTags.includes(tagId)) {
+      setSelectedTags(selectedTags.filter(id => id !== tagId));
+    } else {
+      setSelectedTags([...selectedTags, tagId]);
+    }
   };
+
   const containerRef = useRef<HTMLDivElement>(null);
   const [showLeftIcon, setShowLeftIcon] = useState(false);
   const [showRightIcon, setShowRightIcon] = useState(true);
@@ -43,19 +44,19 @@ const HorizontalFilters: React.FC = () => {
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrolling || !containerRef.current) return;
-    
+
     const container = containerRef.current;
     const scrollAmount = container.offsetWidth * 0.2; // Scroll two items at a time
     const start = container.scrollLeft;
     const target = direction === 'left' ? Math.max(0, start - scrollAmount) : Math.min(container.scrollWidth - container.clientWidth, start + scrollAmount);
     const distance = target - start;
     const duration = 500; // Scroll duration in milliseconds
-    
+
     let startTime: number;
 
     const step = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
-      
+
       const elapsedTime = timestamp - startTime;
       const progress = Math.min(elapsedTime / duration, 1);
       container.scrollLeft = start + distance * progress;
@@ -71,6 +72,16 @@ const HorizontalFilters: React.FC = () => {
     requestAnimationFrame(step);
   };
 
+  // Filter projects based on selected tags
+  useEffect(() => {
+    if (selectedTags.length === 0) {
+      setSearchFilteredProjects(searchProjects);
+    } else {
+      const updatedProjects = searchProjects?.filter(project => selectedTags.some(tagId => project.tags.some((tag: any) => tag._id === tagId)));
+      setSearchFilteredProjects(updatedProjects);
+    }
+  }, [selectedTags, searchProjects, setSearchFilteredProjects]);
+
   return (
     <div className='flex mt-4'>
       <div className='hidden md:inline relative w-[70%] ml-32'>
@@ -80,8 +91,13 @@ const HorizontalFilters: React.FC = () => {
           </button>
         )}
         <div className='flex p-1 space-x-2 w-full overflow-x-hidden' ref={containerRef}>
-          {filters.map((filterItem, index) => (
-            <FilterItem onClick={() => handleSearchChange(filterItem)} key={index} filterItem={filterItem} />
+          {tags?.map((filterItem, index) => (
+            <FilterItem
+              key={index}
+              filterItem={filterItem.name}
+              selected={selectedTags.includes(filterItem._id)}
+              onClick={() => handleTagClick(filterItem._id)}
+            />
           ))}
         </div>
         {showRightIcon && (

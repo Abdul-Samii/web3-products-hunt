@@ -35,7 +35,7 @@ const NewProjectForm = () => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [loading, setLoading] = useState(false); // State to control the loading overlay
 
-  const { setListModal } = useContext(SearchContext);
+  const { setListModal, tags, coreCategory } = useContext(SearchContext);
   const { createNewProject } = useContext(ProjectContext);
 
   function closeModal() {
@@ -126,16 +126,8 @@ const NewProjectForm = () => {
     alert('Please fill add the required fields')
   };
 
-  const categories = [
-    { name: 'NFT', id: '6655d96ff5d1b2172f92dee1' },
-    { name: 'Blockchain', id: '6655d97ef5d1b2172f92dee2' },
-    { name: 'Marketplace', id: '6655d987f5d1b2172f92dee3' },
-  ];
-  const tags = [
-    { name: 'Metaverse', id: '6655d9c1f5d1b2172f92dee4' },
-    { name: 'Trading', id: '6655d9cef5d1b2172f92dee5' },
-    { name: 'DeFi', id: '6655d9dcf5d1b2172f92dee6' },
-  ];
+  const inputTags = tags?.map(item => ({ name: item.name, id: item._id }));
+  const inputCategories = coreCategory?.map(item => ({ name: item.name, id: item._id }));
 
   return (
     <div className='md:mx-[20%] mt-12'>
@@ -156,8 +148,8 @@ const NewProjectForm = () => {
           <div className='col-span-1 md:col-span-1'>
             <label className='text-xs'>Categories</label>
             <Multiselect
-              options={categories}
-              selectedValues={selectedCategoryOptions.map(id => categories.find(cat => cat.id === id))}
+              options={inputCategories}
+              selectedValues={selectedCategoryOptions?.map(id => inputCategories?.find(cat => cat.id === id))}
               onSelect={handleAddCategoryOption}
               onRemove={handleRemoveCategoryOption}
               displayValue="name"
@@ -167,8 +159,8 @@ const NewProjectForm = () => {
           <div className='col-span-1 md:col-span-1'>
             <label className='text-xs'>Tags</label>
             <Multiselect
-              options={tags}
-              selectedValues={selectedTagOptions.map(id => tags.find(tag => tag.id === id))}
+              options={inputTags}
+              selectedValues={selectedTagOptions.map(id => inputTags?.find(tag => tag.id === id))}
               onSelect={handleAddTagOption}
               onRemove={handleRemoveTagOption}
               displayValue="name"
