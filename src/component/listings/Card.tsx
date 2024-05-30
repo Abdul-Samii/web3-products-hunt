@@ -10,7 +10,7 @@ const Card = ({ className, project }: any) => {
 
         <div className="flex flex-col max-w-52 md:max-w-[85%]">
           <h2 className="font-bold text-lg text-nowrap">{project.name}</h2>
-          <p className="text-sm text-gray-500 w-[85%] truncate md:overflow-visible md:text-wrap">{project.description}</p>
+          <p className="text-sm text-gray-500 w-[85%] truncate md:overflow-visible md:text-wrap">{project.tldr}</p>
         </div>
 
         <div className="ml-auto flex items-center space-x-1 bg-slate-50 absolute right-4 top-[30%] md:top-[40%] border-[1px] px-4 py-2 rounded-md">
@@ -23,9 +23,9 @@ const Card = ({ className, project }: any) => {
         <div className='flex space-x-2 ml-16 mt-4'>
           {/* <p className='text-xs'>DeFI</p>
           <p className='text-xs ml-2'>+2 more</p> */}
-          <p className='px-2 rounded-sm border-[1px] bg-secondarylight text-xs'>Marketplace</p>
-          <p className='px-2 rounded-sm border-[1px] bg-secondarylight text-xs'>NFT</p>
-          <p className='text-xs ml-2'>+2 more</p>
+          <p className='px-2 rounded-sm border-[1px] bg-secondarylight text-xs'>{project.tags[0].name}</p>
+          {project.tags[1] && <p className='px-2 rounded-sm border-[1px] bg-secondarylight text-xs'>{project.tags[1].name}</p>}
+          <p className='text-xs ml-2'>{project.tags.length > 1 && `+ ${project.tags.length - 1} more`}</p>
           <FaShareSquare className='text-gray-500' />
         </div>
       </div>

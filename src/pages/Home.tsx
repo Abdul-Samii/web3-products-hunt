@@ -5,7 +5,6 @@ import { Footer } from '../component/footer';
 import { useContext } from 'react';
 import { SearchContext } from '../context/SearchContext';
 import RecentlyAdded from '../component/listings/RecentlyAdded';
-import NewProjectForm from '../component/addform/NewProjectForm';
 
 const Home = () => {
 
@@ -22,7 +21,6 @@ const Home = () => {
           <div className='h-28' />
           <SubscribeCard />
           <Footer />
-          <NewProjectForm />
           </>
         )
       }
