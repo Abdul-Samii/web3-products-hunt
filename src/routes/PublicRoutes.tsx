@@ -9,15 +9,15 @@ const PublicRoutes = () => {
   return (
 
     <Routes>
-      <Route path='/web3-products-hunt' element={<Home />} />
-      <Route path='/web3-products-hunt/trending' element={<Category />} />
-      <Route path='/web3-products-hunt/gaming' element={<Category />} />
-      <Route path='/web3-products-hunt/infrastructure' element={<Category />} />
-      <Route path='/web3-products-hunt/recent-projects' element={<Category />} />
-      <Route path='/web3-products-hunt/explore' element={<Category />} />
-      <Route path='/web3-products-hunt/auth' element={<Auth />} />
-      <Route path='/web3-products-hunt/profile-details' element={<ProfileDetail />} />
-      <Route path='/web3-products-hunt/add-project' element={<NewProjectForm />} />
+      <Route path='/' element={<Home />} />
+      <Route path='/trending' element={<Category />} />
+      <Route path='/gaming' element={<Category />} />
+      <Route path='/infrastructure' element={<Category />} />
+      <Route path='/recent-projects' element={<Category />} />
+      <Route path='/explore' element={<Category />} />
+      <Route path='/auth' element={<Auth />} />
+      <Route path='/profile-details' element={<ProfileDetail />} />
+      <Route path='/add-project' element={<NewProjectForm />} />
     </Routes>
   )
 }

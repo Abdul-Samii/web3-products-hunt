@@ -4,15 +4,26 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import { SearchContext } from '../../context/SearchContext';
 
 const HorizontalFilters: React.FC = () => {
-  const { setSearchFilteredProjects, searchProjects, tags } = useContext(SearchContext);
+  const { setSearchFilteredProjects, searchProjects, tags, coreCategory } = useContext(SearchContext);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedTag, setSelectedTag] = useState<string>('');
 
   const handleTagClick = (tagId: string) => {
-    // Toggle the selection state of the tag
     if (selectedTags.includes(tagId)) {
       setSelectedTags(selectedTags.filter(id => id !== tagId));
+      setSelectedTag(''); // Deselect tag in the dropdown
     } else {
       setSelectedTags([...selectedTags, tagId]);
+      setSelectedTag(tagId); // Select tag in the dropdown
+    }
+  };
+
+  const handleCategoryClick = (categoryId: string) => {
+    if (selectedCategories.includes(categoryId)) {
+      setSelectedCategories(selectedCategories.filter(id => id !== categoryId));
+    } else {
+      setSelectedCategories([...selectedCategories, categoryId]);
     }
   };
 
@@ -72,15 +83,28 @@ const HorizontalFilters: React.FC = () => {
     requestAnimationFrame(step);
   };
 
-  // Filter projects based on selected tags
   useEffect(() => {
-    if (selectedTags.length === 0) {
-      setSearchFilteredProjects(searchProjects);
-    } else {
-      const updatedProjects = searchProjects?.filter(project => selectedTags.some(tagId => project.tags.some((tag: any) => tag._id === tagId)));
-      setSearchFilteredProjects(updatedProjects);
-    }
-  }, [selectedTags, searchProjects, setSearchFilteredProjects]);
+    const filterProjects = () => {
+      let filteredProjects = searchProjects;
+
+      if (selectedCategories.length > 0) {
+        filteredProjects = filteredProjects?.filter(project =>
+          selectedCategories.some(categoryId =>
+            project.coreCategories.some((category: any) => category._id === categoryId)
+          )
+        );
+      }
+
+      if (selectedTags.length > 0) {
+        filteredProjects = filteredProjects?.filter(project =>
+          project.tags.some((tag: any) => selectedTags.includes(tag._id))
+        );
+      }
+      setSearchFilteredProjects(filteredProjects);
+    };
+
+    filterProjects();
+  }, [selectedTags, selectedCategories, searchProjects, setSearchFilteredProjects]);
 
   return (
     <div className='flex mt-4'>
@@ -91,12 +115,12 @@ const HorizontalFilters: React.FC = () => {
           </button>
         )}
         <div className='flex p-1 space-x-2 w-full overflow-x-hidden' ref={containerRef}>
-          {tags?.map((filterItem, index) => (
+          {coreCategory?.map((filterItem, index) => (
             <FilterItem
               key={index}
               filterItem={filterItem.name}
-              selected={selectedTags.includes(filterItem._id)}
-              onClick={() => handleTagClick(filterItem._id)}
+              selected={selectedCategories.includes(filterItem._id)}
+              onClick={() => handleCategoryClick(filterItem._id)}
             />
           ))}
         </div>
@@ -106,11 +130,13 @@ const HorizontalFilters: React.FC = () => {
           </button>
         )}
       </div>
-      <select className='border-[1px] px-3 ml-4 rounded-md outline-none'>
-        <option>Sort by</option>
-        <option>Votes</option>
-        <option>Likes</option>
-        <option>Visits</option>
+      <select value={selectedTag} onChange={(e) => handleTagClick(e.target.value)} className='border-[1px] px-3 ml-4 rounded-md outline-none'>
+        <option value="">Select a tag</option>
+        {tags?.map((tag) => (
+          <option value={tag._id} key={tag._id}>
+            {tag.name}
+          </option>
+        ))}
       </select>
     </div>
   );

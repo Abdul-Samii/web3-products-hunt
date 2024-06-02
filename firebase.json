@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "dist",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/web3-products-hunt/**",
+        "destination": "/web3-products-hunt/index.html"
+      }
+    ]
+  }
+}

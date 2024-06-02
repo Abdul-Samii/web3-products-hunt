@@ -48,12 +48,11 @@ const Navbar = () => {
 
   useEffect(() => {
     if (
-      (window.location.pathname !== '/web3-products-hunt' &&
-        window.location.pathname !== '/web3-products-hunt/') ||
+      (window.location.pathname !== '/') ||
       searchValue
     ) {
       setChangeColor(true);
-      if (searchValue) navigate('/web3-products-hunt');
+      if (searchValue) navigate('/');
     } else {
       setChangeColor(false);
     }
@@ -69,16 +68,28 @@ const Navbar = () => {
         className={`flex items-center  ${searchValue.length > 0 && 'md:hidden'}`}
       >
         <Link
-          to='/web3-products-hunt'
+          to='/'
           className='text-lg font-bold mr-2 text-secondarydark'
         >
           <span className='text-secondarydark font-thin'>YOUR</span>LOGO
         </Link>
         <div className='border-r-2 h-6 bg-red-400 mr-2' />
         <div className='hidden md:flex space-x-4'>
+          {/* {
+            coreCategory?.map((category) => {
+              return (
+                <p
+                  onClick={() => handleSearchChange(category.name)}
+                  className='hover:text-[#3341BD] cursor-pointer'
+                >
+                  {category.name}
+                </p>
+              )
+            } )
+          } */}
           <p
             onClick={() => handleSearchChange('Trending')}
-            className='hover:text-[#3341BD] cursor-pointer'
+          className='hover:text-[#3341BD] cursor-pointer'
           >
             Trending
           </p>
@@ -133,7 +144,7 @@ const Navbar = () => {
           <p className='w-24 text-center m-auto'>About Us</p>
           <Link
             onClick={clearSearch}
-            to='/web3-products-hunt/auth'
+            to='/auth'
             className='bg-secondarylight text-black p-2 rounded-md w-24 text-center'
           >
             Signup
@@ -213,7 +224,7 @@ const Navbar = () => {
             Recently Added
           </p>
           <Link
-            to='/web3-products-hunt/about'
+            to='/about'
             className='px-4 py-4 hover:bg-primarydark w-full flex'
           >
             <p className='my-auto mx-2'>
@@ -222,7 +233,7 @@ const Navbar = () => {
             About Us
           </Link>
           <Link
-            to='/web3-products-hunt/notifications'
+            to='/notifications'
             className='px-4 py-4 hover:bg-primarydark w-full flex'
           >
             <p className='my-auto mx-2'>
@@ -232,7 +243,7 @@ const Navbar = () => {
           </Link>
           <Link
             onClick={clearSearch}
-            to='/web3-products-hunt/auth'
+            to='/auth'
             className='px-4 py-4 hover:bg-primarydark w-full flex'
           >
             <p className='my-auto mx-2'>
